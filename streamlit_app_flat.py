@@ -60,7 +60,6 @@ def find_words(optional_letters, mandatory_letters):
 st.write(
     """
     # NYT Spelling Bee Solver
-    ## By [Daniel Chuang](https://github.com/daniel-chuang)
     Solves the daily [New York Times Spelling Bee](https://www.nytimes.com/puzzles/spelling-bee) challenge!
     """
 )
@@ -69,8 +68,7 @@ st.write(
 st.image("spelling_bee_solver.png")
 
 # Instructions for Game
-st.sidebar.write("# FAQ")
-with st.sidebar.expander("What is the New York Times Spelling Bee Game?", expanded=False):
+with st.expander("What is the New York Times Spelling Bee Game?", expanded=False):
     st.write(
         """
     [Link to Official Instructions](https://www.nytimes.com/2021/07/26/crosswords/spelling-bee-forum-introduction.html)
@@ -92,7 +90,7 @@ with st.sidebar.expander("What is the New York Times Spelling Bee Game?", expand
     )
 
 # Instructions for Website Usage
-with st.sidebar.expander("How do I use this website?", expanded=False):
+with st.expander("How do I use this website?", expanded=False):
     st.write(
         """
         Input all of the optional letters, then all of the mandatory letters, and an output will come out! 
@@ -127,12 +125,13 @@ st.write(output)
 
 
 # Explaination of the program for SWAG people
-with st.sidebar.expander("How does it work?", expanded=False):
+st.write("# For the curious")
+with st.expander("How does it work?", expanded=False):
     st.write(
         r"""
         Using a [list of almost all of the words in the English language](http://www.mieliestronk.com/wordlist.html), the program creates 26 sets of words, each set representing all of the words that include one of the 26 letters anywhere in the word.
 
-        In order to find the final list, the program removes all words that have letters outside of the entered letters. Then, it takes the intersection of the mandatory letters with the remaining list. Finally, it removes any results that are under 4 letters long!
+        In order to find the final list, the program removes all words that have letters.
 
         Another way to do it is by iterating through all of the combinations of the letters, but that is inefficient:
         
@@ -143,7 +142,7 @@ with st.sidebar.expander("How does it work?", expanded=False):
     )
 
 # Self-plug
-with st.sidebar.expander("Where can I see more of your projects?", expanded=False):
+with st.expander("Where can I see more of your projects?", expanded=True):
     st.write(
         """
         Here's my personal website: [https://sites.google.com/view/daniel-chuang/home](https://sites.google.com/view/daniel-chuang/home)
