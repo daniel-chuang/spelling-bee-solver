@@ -1,4 +1,6 @@
 """
+VERY ROUGH DRAFT FOR THE IDEA BEFORE A FRONTEND IS MADE
+
 SPELLING BEE
 
 Words must include the center letter.
