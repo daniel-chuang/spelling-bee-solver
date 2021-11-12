@@ -1,5 +1,6 @@
 # Imports
 import streamlit as st
+import pandas as pd
 import random
 
 # Functions
@@ -57,11 +58,15 @@ def find_words(optional_letters, mandatory_letters):
 
 
 # Website frontend
+st.set_page_config(page_title="NYT Bee Solver!", page_icon=None, layout="wide", initial_sidebar_state="auto")
+
+# Title
 st.write(
     """
-    # NYT Spelling Bee Solver
-    ## By [Daniel Chuang](https://github.com/daniel-chuang)
+    # NYT Spelling Bee Solver by [Daniel Chuang](https://github.com/daniel-chuang)
     Solves the daily [New York Times Spelling Bee](https://www.nytimes.com/puzzles/spelling-bee) challenge!
+    
+    ## Screenshot of Game
     """
 )
 
@@ -110,8 +115,13 @@ mandatory_letters = st.text_input("What are the mandatory letters?").lower()
 output = find_words(optional_letters, mandatory_letters)
 
 # Allows the user to select different sorting methods for the list
-sorted_by = st.selectbox(
-    "Sort list by", ["A-Z", "Z-A", "Length Increasing", "Length Decreasing"])
+with st.expander("Advanced Options", expanded=False):
+    col1, col2 = st.columns(2)
+    sorted_by = col1.selectbox(
+        "Sort list by", ["A-Z", "Z-A", "Length Increasing", "Length Decreasing"])
+    output_format = col2.selectbox(
+        "Format data in", ["Text", "Dataframe", "List (For Copy Paste)"]
+    )
 
 # Sorts the output list
 output = list(output)
@@ -123,7 +133,17 @@ elif sorted_by == "Length Increasing":
     output = sorted(output, key=len)
 elif sorted_by == "Length Decreasing":
     output = sorted(output, key=len, reverse=True)
-st.write(output)
+
+# Displays the output!
+st.write("# Results")
+if output_format == "Text":
+    st.write(str(output)[1:-2].replace("'", ""))
+elif output_format == "Dataframe":
+    output = pd.DataFrame(output)
+    output.index = [""] * len(output)
+    st.dataframe(output, width=None, height=99999999)
+else:
+    st.write(output)
 
 
 # Explaination of the program for SWAG people
