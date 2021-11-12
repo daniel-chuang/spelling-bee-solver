@@ -1,5 +1,6 @@
 # Imports
 import streamlit as st
+import random
 
 # Functions
 
@@ -38,22 +39,19 @@ def find_words(optional_letters, mandatory_letters):
 
     # Subtracts each unused letter set from the universal set of all words
     null_letters = letters - optional_letters - mandatory_letters
-    all_words = all_words
     for null_letter in null_letters:
         all_words -= dictionary[null_letter]
 
-    # Adds all of the words that fit the requirements into the output list
+    # Makes sure that each word has both mandatory letters
+    for mandatory_letter in mandatory_letters:
+        all_words = all_words.intersection(dictionary[mandatory_letter])
+
+    # Checks if the word is four letters or greater, then adds it to the outputs if it is!
     all_words = list(all_words)
     output = []
     for word in all_words:
-        if len(word) > 3: # Checks if the word is four letters or greater
+        if len(word) > 3:
             output.append(word)
-            for mandatory_letter in mandatory_letters: # checks if both mandatory letters are inside
-                if mandatory_letter not in word:
-                    output.remove(word)
-                    break
-
-
 
     return(output)
 
@@ -111,7 +109,7 @@ output = find_words(optional_letters, mandatory_letters)
 
 # Allows the user to select different sorting methods for the list
 sorted_by = st.selectbox(
-    "Sort list by", ["A-Z", "Z-A", "Length Down", "Length Up"])
+    "Sort list by", ["A-Z", "Z-A", "Length Increasing", "Length Decreasing"])
 
 # Sorts the output list
 output = list(output)
@@ -119,9 +117,9 @@ if sorted_by == "A-Z":
     output = sorted(output)
 elif sorted_by == "Z-A":
     output = sorted(output, reverse=True)
-elif sorted_by == "Length Down":
+elif sorted_by == "Length Increasing":
     output = sorted(output, key=len)
-elif sorted_by == "Length Up":
+elif sorted_by == "Length Decreasing":
     output = sorted(output, key=len, reverse=True)
 st.write(output)
 
@@ -133,7 +131,7 @@ with st.expander("How does it work?", expanded=False):
         r"""
         Using a [list of almost all of the words in the English language](http://www.mieliestronk.com/wordlist.html), the program creates 26 sets of words, each set representing all of the words that include one of the 26 letters anywhere in the word.
 
-        In order to find the final list, the program makes a union between all the sets of the optional letters, then intersects that with the set of the mandatory letter. Remember, union is to *or* as intersect is to *and*.
+        In order to find the final list, the program removes all words that have letters.
 
         Another way to do it is by iterating through all of the combinations of the letters, but that is inefficient:
         
