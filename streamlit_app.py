@@ -4,7 +4,7 @@ import streamlit as st
 # Functions
 
 
-def find_words(optional_letters, mandatory_letter):
+def find_words(optional_letters, mandatory_letters):
 
     # Reading the file
     all_words_file = open("corncob_lowercase.txt", "r")
@@ -34,11 +34,10 @@ def find_words(optional_letters, mandatory_letter):
     optional_letters = {letter for letter in optional_letters}
 
     # The mandatory letter, which must be in the word
-    mandatory_letter_word = mandatory_letter
-    mandatory_letter = {mandatory_letter}
+    mandatory_letters = {letter for letter in mandatory_letters}
 
     # Subtracts each unused letter set from the universal set of all words
-    null_letters = letters - optional_letters - mandatory_letter
+    null_letters = letters - optional_letters - mandatory_letters
     all_words = all_words
     for null_letter in null_letters:
         all_words -= dictionary[null_letter]
@@ -47,8 +46,14 @@ def find_words(optional_letters, mandatory_letter):
     all_words = list(all_words)
     output = []
     for word in all_words:
-        if len(word) > 4 and mandatory_letter_word in word:
+        if len(word) > 3: # Checks if the word is four letters or greater
             output.append(word)
+            for mandatory_letter in mandatory_letters: # checks if both mandatory letters are inside
+                if mandatory_letter not in word:
+                    output.remove(word)
+                    break
+
+
 
     return(output)
 
@@ -91,8 +96,6 @@ with st.expander("How do I use this website?", expanded=False):
     st.write(
         """
         Input all of the optional letters, then all of the mandatory letters, and an output will come out! 
-
-        Make sure only to input A-Z characters, no punctionation please! You can only have one mandatory letter.
         """
     )
 
@@ -103,8 +106,8 @@ letters = {
 
 st.write("# Solver")
 optional_letters = st.text_input("What are the optional letters?").lower()
-mandatory_letter = st.text_input("What are the mandatory letters?").lower()
-output = find_words(optional_letters, mandatory_letter)
+mandatory_letters = st.text_input("What are the mandatory letters?").lower()
+output = find_words(optional_letters, mandatory_letters)
 
 # Allows the user to select different sorting methods for the list
 sorted_by = st.selectbox(
