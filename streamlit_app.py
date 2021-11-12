@@ -90,14 +90,18 @@ with st.expander("What is the New York Times Spelling Bee Game?", expanded=False
 with st.expander("How do I use this website?", expanded=False):
     st.write(
         """
-        Input all of the optional letters, then all of the mandatory letters, and an output will come out!
+        Input all of the optional letters, then all of the mandatory letters, and an output will come out! Make sure only to input A-Z characters, no punctionation please! You can only have one mandatory letter.
         """
     )
 
 # The input form for the optional and mandatory letters
+letters = {
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+    }
+
 st.write("# Solver")
-optional_letters = st.text_input("What are the optional letters?")
-mandatory_letter = st.text_input("What are the mandatory letters?")
+optional_letters = st.text_input("What are the optional letters?").lower()
+mandatory_letter = st.text_input("What are the mandatory letters?").lower()
 output = find_words(optional_letters, mandatory_letter)
 
 # Allows the user to select different sorting methods for the list
