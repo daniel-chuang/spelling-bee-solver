@@ -1,4 +1,4 @@
-# NYT Spelling Bee Solver
+# [NYT Spelling Bee Solver](https://share.streamlit.io/daniel-chuang/spelling-bee-solver/)
 
 Solves the daily [New York Times Spelling Bee](https://www.nytimes.com/puzzles/spelling-bee) challenge!
 ![Screenshotted image](spelling_bee_solver.png)
