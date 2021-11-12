@@ -90,7 +90,9 @@ with st.expander("What is the New York Times Spelling Bee Game?", expanded=False
 with st.expander("How do I use this website?", expanded=False):
     st.write(
         """
-        Input all of the optional letters, then all of the mandatory letters, and an output will come out! Make sure only to input A-Z characters, no punctionation please! You can only have one mandatory letter.
+        Input all of the optional letters, then all of the mandatory letters, and an output will come out! 
+
+        Make sure only to input A-Z characters, no punctionation please! You can only have one mandatory letter.
         """
     )
 
